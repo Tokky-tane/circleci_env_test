@@ -1,0 +1,18 @@
+version: 2.1
+
+jobs:
+  test:
+    docker:
+      - image: cimg/base:stable
+    resource_class: small
+    steps:
+      - checkout
+      - run: echo 'BASH_ENV_PREVIOUS_STEP=bash_env_previous_step' >> ${BASH_ENV}
+      - run:
+          name: "test environment"
+          command: . test_env.sh
+
+workflows:
+  test-workflow:
+    jobs:
+      - test

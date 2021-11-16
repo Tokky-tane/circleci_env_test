@@ -7,7 +7,7 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - run: 
+      - run: |
           echo 'BASH_ENV_PREVIOUS_STEP=bash_env_previous_step' >> ${BASH_ENV}
           cat $BASH_ENV
       - run:

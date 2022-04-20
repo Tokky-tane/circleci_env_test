@@ -7,26 +7,22 @@ jobs:
     resource_class: small
     steps:
       - checkout
-      - run: |
-          echo 'BASH_ENV_PREVIOUS_STEP=bash_env_previous_step' >> ${BASH_ENV}
-          cat $BASH_ENV
-      - run:
-          name: "test environment"
-          command: |
-            cat $BASH_ENV
-            . test_env.sh
+      - run: echo test1
   test2:
     docker:
       - image: cimg/base:stable
     resource_class: small
     steps:
       - checkout
-      - run: |
-          echo $BASH_ENV
-          cat $BASH_ENV
+      - run: echo test2
 
 workflows:
   test-workflow:
     jobs:
-      - test
-      - test2
+      - test:
+          filters:
+            branches:
+              ignore: main
+      - test2:
+          requires:
+            - test
